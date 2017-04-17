@@ -1,5 +1,5 @@
 {
-  "name": "reacttimer",
+  "name": "boilerplate",
   "version": "1.0.0",
   "description": "Simple react app",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "karma start",
     "start": "node server.js"
   },
-  "author": "Andrew Mead",
+  "author": "Jayne Jacobs",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.9.1",
@@ -23,7 +23,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
-    "expect": "^1.20.2",
+    "expect": "^1.14.0",
     "foundation-sites": "6.2.0",
     "jquery": "^2.2.1",
     "karma": "^0.13.22",
@@ -38,14 +38,5 @@
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.13"
-  },
-  "keywords": [],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JayneJacobs/ReactTimer.git"
-  },
-  "bugs": {
-    "url": "https://github.com/JayneJacobs/ReactTimer/issues"
-  },
-  "homepage": "https://github.com/JayneJacobs/ReactTimer#readme"
+  }
 }
