@@ -5,7 +5,7 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var Clock = require('Clock');9
+var Clock = require('Clock');
 
 describe('Clock', () => {
   it('should exist', () => {

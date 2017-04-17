@@ -15,12 +15,15 @@ var Navigation = () => {
           <li>
             <Link to="/countdown" activeClassName="active-link">Countdown</Link>
           </li>
+          <li>
+            <Link to="/about" activeClassName="active-link">About</Link>
+          </li>
         </ul>
       </div>
       <div className="top-bar-right">
         <ul className="menu">
           <li className="menu-text">
-            Created by <a href="http://www.mead.io" target="_blank">Jayne Jacobs</a>
+            Created by <a href="http://www.jaynejacobs.com" target="_blank">Jayne Jacobs</a>
           </li>
         </ul>
       </div>
