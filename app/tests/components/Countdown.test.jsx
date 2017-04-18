@@ -1,64 +1,61 @@
 var React = require('react');
-var Clock = require('Clock');
-var CountdownForm = require('CountdownForm');
-var Controls = require('Controls');
+var ReactDOM = require('react-dom');
+var expect = require('expect');
+var $ = require('jQuery');
+var TestUtils = require('react-addons-test-utils');
 
-var Countdown = React.createClass({
-  getInitialState: function () {
-    return {
-      count: 0,
-      countdownStatus: 'stopped'
-    };
-  },
-  componentDidUpdate: function (prevProps, prevState) {
-    if (this.state.countdownStatus !== prevState.countdownStatus) {
-      switch (this.state.countdownStatus) {
-        case 'started':
-          this.startTimer();
-          break;
-        case 'stopped':
-          this.setState({count: 0});
-        case 'paused':
-          clearInterval(this.timer)
-          this.timer = undefined;
-          break;
-      }
-    }
-  },
-  startTimer: function () {
-    this.timer = setInterval(() => {
-      var newCount = this.state.count - 1;
-      this.setState({
-        count: newCount >= 0 ? newCount : 0
-      });
-    }, 1000);
-  },
-  handleSetCountdown: function (seconds) {
-    this.setState({
-      count: seconds,
-      countdownStatus: 'started'
-    });
-  },
-  handleStatusChange: function (newStatus) {
-    this.setState({countdownStatus: newStatus});
-  },
-  render: function () {
-    var {count, countdownStatus} = this.state;
-    var renderControlArea = () => {
-      if (countdownStatus !== 'stopped') {
-        return <Controls countdownStatus={countdownStatus} onStatusChange={this.handleStatusChange}/>;
-      } else {
-        return <CountdownForm onSetCountdown={this.handleSetCountdown}/>;
-      }
-    };
+var Countdown = require('Countdown');
 
-    return (
-      <div>
-        <Clock totalSeconds={count}/>
-        {renderControlArea()}
-      </div>
-    );
-  }
+describe('Countdown', () => {
+  it('should exist', () => {
+    expect(Countdown).toExist();
+  });
+
+  describe('handleSetCountdown', () => {
+     it('should set state to started and coutdown', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(10);
+
+       expect(countdown.state.count).toBe(10);
+       expect(countdown.state.countdownStatus).toBe('started');
+
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(9);
+         done();
+       }, 1001)
+     });
+
+     it('should never set count less than zero', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(1);
+
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(0);
+         done();
+       }, 3001)
+     });
+
+     it('should pause countdown on paused status', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(3);
+       countdown.handleStatusChange('paused');
+
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(3);
+         expect(coundown.state.countdownStatus).toBe('paused');
+         done();
+       }, 1001);
+     });
+     it('should reset count  on stopped status', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(3);
+       countdown.handleStatusChange('stopped');
+
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(3);
+         expect(coundown.state.countdownStatus).toBe('stopped');
+         done();
+       }, 1001);
+     });
+  });
 });
-
-module.exports = Countdown;

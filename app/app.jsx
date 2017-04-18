@@ -19,7 +19,7 @@ ReactDOM.render(
     <Route path="/" component={Main}>
       <Route path="countdown" component={Countdown}/>
       <Route path="about" component={About}/>
-      <IndexRoute component={Countdown}/>
+      <IndexRoute component={Timer}/>
 
     </Route>
   </Router>,
