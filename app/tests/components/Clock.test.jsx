@@ -4,40 +4,36 @@ var expect = require('expect');
 var $ = require('jQuery');
 var TestUtils = require('react-addons-test-utils');
 
-var Clock = require('Clock');
+var Countdown = require('Countdown');
 
-describe('Clock', () => {
+describe('Countdown', () => {
   it('should exist', () => {
-    expect(Clock).toExist();
+    expect(Countdown).toExist();
   });
 
-  describe('render', () => {
-    it('should render clock to output', () => {
-      var clock = TestUtils.renderIntoDocument(<Clock totalSeconds={62}/>);
-      var $el = $(ReactDOM.findDOMNode(clock));
-      var actualText = $el.find('.clock-text').text();
+  describe('handleSetCountdown', () => {
+     it('should set state to started and coutdown', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(10);
 
-      expect(actualText).toBe('01:02');
-    });
-  });
+       expect(countdown.state.count).toBe(10);
+       expect(countdown.state.countdownStatus).toBe('started');
 
-  describe('formatSeconds', () => {
-    it('should format seconds', () => {
-      var clock = TestUtils.renderIntoDocument(<Clock/>);
-      var seconds = 615;
-      var expected = '10:15';
-      var actual = clock.formatSeconds(seconds);
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(9);
+         done();
+       }, 1001)
+     });
 
-      expect(actual).toBe(expected);
-    });
+     it('should never set count less than zero', (done) => {
+       var countdown = TestUtils.renderIntoDocument(<Countdown/>);
+       countdown.handleSetCountdown(1);
 
-    it('should format seconds when min/sec are less than 10', () => {
-      var clock = TestUtils.renderIntoDocument(<Clock/>);
-      var seconds = 61;
-      var expected = '01:01';
-      var actual = clock.formatSeconds(seconds);
-
-      expect(actual).toBe(expected);
-    });
+       setTimeout(() => {
+         expect(countdown.state.count).toBe(0);
+         done();
+       }, 3001)
+     });
   });
 });
+s
